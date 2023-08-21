@@ -1,0 +1,38 @@
+@startuml GroundCycle
+autonumber
+
+participant Drone as drone
+participant Carpet as carpet
+participant "Airport Plugin" as ap
+participant "Airport Module" as am
+participant "Airport DB" as db
+participant "Token Module" as tm
+participant "Lisk" as lisk
+
+drone -> carpet: Landed
+activate drone #06AED5
+
+drone -> lisk: Get contract statement from airport account
+lisk --> drone: Return contract statement
+note over ap: Pay fee to airport for carpet usage.
+drone -> tm: Create payment transaction
+deactivate drone
+
+carpet -> ap: Drone landed
+activate ap #FFF1D0
+ap -> db: Get private key and landlord account
+db --> ap: Return private information
+ap -> am: Create landing transaction
+deactivate ap
+
+... some time ...
+
+am -> ap: Publish event\n with landing transaction
+activate ap #FFF1D0
+ap -> lisk: Get contract statement from landlord account
+lisk --> ap: Return contract statement
+note over ap: Pay fee to landlord for land rent.
+ap -> tm: Create payment transaction
+deactivate ap
+
+@enduml

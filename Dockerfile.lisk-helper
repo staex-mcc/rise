@@ -1,0 +1,2 @@
+FROM node:16
+RUN npm install -g lisk-commander@5.1.10
