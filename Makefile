@@ -19,14 +19,20 @@ build_lisk_helper:
 
 create:
 	rm -rf airport-lisk-data/
-	rm -rf utils/*.db
 	mkdir airport-lisk-data/
 	mkdir airport-lisk-data/airport.db
 	mkdir airport-lisk-data/landings.db
 	mkdir airport-lisk-data/transactions.db
+	
+	rm -rf utils/*.db
 	mkdir utils/airport.db
 	mkdir utils/landings.db
 	mkdir utils/transactions.db
+	
+	rm -rf airport-lisk/config/default/accounts.json
+	rm -rf airport-lisk/config/default/forging_info.json
+	rm -rf airport-lisk/config/default/genesis_block.json
+	rm -rf airport-lisk/config/default/password.json
 	touch airport-lisk/config/default/accounts.json
 	touch airport-lisk/config/default/forging_info.json
 	touch airport-lisk/config/default/genesis_block.json
