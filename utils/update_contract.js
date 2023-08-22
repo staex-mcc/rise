@@ -12,7 +12,7 @@ import { apiClient, transactions } from "lisk-sdk";
           amount: 30,
         }
       },
-      "fetch turkey nuclear mother half beef floor small flush dry volcano motion",
+      "cricket patrol welcome shove bright relax luggage warfare actor street shine access",
     );
     await client.transaction.send(tx);
   } catch (e) {
