@@ -13,4 +13,3 @@ import { apiClient, cryptography, transactions } from "lisk-sdk";
   }
   process.exit(0);
 })();
-
