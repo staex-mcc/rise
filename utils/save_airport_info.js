@@ -13,10 +13,10 @@ import { apiClient, db } from "lisk-sdk";
     }
     
     storage.put("name", "StaexSuperDuperPort");
-    storage.put("landlord_address", "09ebe5da4acff5ccc5587aeea766da4679e0f9b7");
+    storage.put("landlord_address", "77bd186762861ec26b908e303f4cd3e0c3c79cb1");
     storage.put(
       "passphrase",
-      "frozen doctor win exact pottery wife height essay shift hospital castle arena",
+      "south pilot domain rack gap magnet dismiss bomb spike enough monitor negative",
     );
   } catch (e) {
     console.error(e);

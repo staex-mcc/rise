@@ -1,8 +1,8 @@
 import { apiClient, cryptography, transactions } from "lisk-sdk";
 
 // It should be embedded to Drone microchip.
-const dronePassphrase = "exist olympic match wash oppose reflect seminar heart square three blue wagon";
-const airportAddress = "221d982fd5a560ded4c6cd467e17ee75cb654cf1";
+const dronePassphrase = "stomach fox model manage venture bullet caution iron caught enemy size author";
+const airportAddress = "f5754a6504732cc3d1520607d8e9495e8de3b1d8";
 
 (async () => {
   const client = await apiClient.createWSClient("ws://127.0.0.1:12400/ws");
@@ -10,7 +10,7 @@ const airportAddress = "221d982fd5a560ded4c6cd467e17ee75cb654cf1";
     const res = await client.invoke("app:getAccount", { address: airportAddress });
     const accObject = client.account.decode(res);
     const accJSON = client.account.toJSON(accObject);
-    const toPay = accJSON.airport.contract.amount / 1000;
+    const toPay = accJSON.airport.contract.amount / 1000; // todo: why?
     console.log("Need to pay fee to Airport:", toPay);
 
     const airportAddressBuf = cryptography.hexToBuffer(airportAddress);
