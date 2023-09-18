@@ -10,7 +10,8 @@ const airportAddress = "f5754a6504732cc3d1520607d8e9495e8de3b1d8";
     const res = await client.invoke("app:getAccount", { address: airportAddress });
     const accObject = client.account.decode(res);
     const accJSON = client.account.toJSON(accObject);
-    const toPay = accJSON.airport.contract.amount / 1000; // todo: why?
+    // As we have not endless amount of money we reduce any amount by 1000 to avoid no tokens error.
+    const toPay = accJSON.airport.contract.amount / 1000;
     console.log("Need to pay fee to Airport:", toPay);
 
     const airportAddressBuf = cryptography.hexToBuffer(airportAddress);

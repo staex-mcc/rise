@@ -127,7 +127,8 @@ export class AirportPlugin extends BasePlugin {
 		})) as Buffer;
 		const accObject = this.client.account.decode(res);
 		const accJSON = this.client.account.toJSON(accObject) as AccountType;
-		const toPay = accJSON.airport.contract.amount / 1000; // todo: why?
+		// As we have not endless amount of money we reduce any amount by 1000 to avoid no tokens error.
+		const toPay = accJSON.airport.contract.amount / 1000;
 		this._logger.info(toPay, 'Need to pay fee to Landlord');
 
 		const addressBuf = cryptography.hexToBuffer(info.landlordAddress);
@@ -137,7 +138,8 @@ export class AirportPlugin extends BasePlugin {
 			{
 				moduleID: 2,
 				assetID: 0,
-				fee: BigInt(transactions.convertLSKToBeddows('0.02')), // todo: why 0.02?
+				// We increase fee by 0.01 to avoid error about insufficient fee amount for transaction replacement.
+				fee: BigInt(transactions.convertLSKToBeddows('0.02')),
 				asset: {
 					amount: BigInt(transactions.convertLSKToBeddows(`${toPay}`)),
 					recipientAddress: address,
