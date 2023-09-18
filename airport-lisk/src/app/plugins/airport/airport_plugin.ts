@@ -10,8 +10,14 @@ import {
 	apiClient,
 	transactions,
 	cryptography,
+	transactionSchema,
+	codec,
 } from 'lisk-sdk';
 import { AccountType } from '../../modules/airport/airport_module';
+import {
+	schema as LandingAssetSchema,
+	asset as LandingAsset,
+} from '../../modules/airport/assets/landing_asset';
 
 type PrivateInfo = {
 	name: string;
@@ -60,6 +66,26 @@ export class AirportPlugin extends BasePlugin {
 				await this.client.transaction.send(tx);
 				return {};
 			},
+			transactions: async (_params?: Record<string, unknown>) => {
+				const landingStream = this.landingStorage.createReadStream({
+					keys: true,
+					values: true,
+					limit: 1000,
+				});
+				const txStream = this.txStorage.createReadStream({ keys: true, values: true, limit: 1000 });
+				let entities: Tx[] = [];
+				for await (const chunk of landingStream) {
+					let c = (chunk as unknown) as { value: Buffer };
+					let x = processTx('landing', c.value);
+					entities.push(x);
+				}
+				for await (const chunk of txStream) {
+					let c = (chunk as unknown) as { value: Buffer };
+					let x = processTx('transaction', c.value);
+					entities.push(x);
+				}
+				return entities;
+			},
 		};
 	}
 	private airportStorage!: db.KVStore;
@@ -101,6 +127,7 @@ export class AirportPlugin extends BasePlugin {
 		})) as Buffer;
 		const accObject = this.client.account.decode(res);
 		const accJSON = this.client.account.toJSON(accObject) as AccountType;
+		// As we have not endless amount of money we reduce any amount by 1000 to avoid no tokens error.
 		const toPay = accJSON.airport.contract.amount / 1000;
 		this._logger.info(toPay, 'Need to pay fee to Landlord');
 
@@ -111,6 +138,7 @@ export class AirportPlugin extends BasePlugin {
 			{
 				moduleID: 2,
 				assetID: 0,
+				// We increase fee by 0.01 to avoid error about insufficient fee amount for transaction replacement.
 				fee: BigInt(transactions.convertLSKToBeddows('0.02')),
 				asset: {
 					amount: BigInt(transactions.convertLSKToBeddows(`${toPay}`)),
@@ -138,3 +166,69 @@ export class AirportPlugin extends BasePlugin {
 		return { name, landlordAddress, passphrase };
 	}
 }
+
+// Copied from https://lisk.com/documentation/lisk-sdk/modules/token-module.html#transferasset (v5.2.2).
+const tokenModuleSchema = {
+	$id: 'lisk/transfer-asset',
+	title: 'Transfer transaction asset',
+	type: 'object',
+	required: ['amount', 'recipientAddress', 'data'],
+	properties: {
+		amount: {
+			dataType: 'uint64',
+			fieldNumber: 1,
+		},
+		recipientAddress: {
+			dataType: 'bytes',
+			fieldNumber: 2,
+		},
+		data: {
+			dataType: 'string',
+			fieldNumber: 3,
+		},
+	},
+};
+
+type RawTransferAsset = {
+	amount: number;
+	recipientAddress: Buffer;
+	data: String;
+};
+
+type TransferAsset = {
+	amount: String;
+	recipient: String;
+	data: String;
+};
+
+type Tx = {
+	type: String;
+	sender: String;
+	transfer: TransferAsset | undefined;
+	landing: LandingAsset | undefined;
+};
+
+const processTx = (name: String, val: Buffer): Tx => {
+	const tx = codec.decode(transactionSchema, val) as Transaction;
+	const sender = cryptography.bufferToHex(tx.senderPublicKey);
+	let transfer: TransferAsset | undefined;
+	let landing: LandingAsset | undefined;
+	if (name === 'landing') {
+		const asset = codec.decode(LandingAssetSchema, tx.asset) as LandingAsset;
+		landing = asset;
+	} else {
+		const asset = codec.decode(tokenModuleSchema, tx.asset) as RawTransferAsset;
+		const address = cryptography.bufferToHex(asset.recipientAddress);
+		transfer = {
+			amount: transactions.convertBeddowsToLSK(asset.amount.toString(10)),
+			recipient: address,
+			data: asset.data,
+		};
+	}
+	return {
+		type: name,
+		sender,
+		transfer,
+		landing,
+	};
+};
