@@ -13,9 +13,7 @@
 - Run Lisk node: `make run`.
 - Enable Faucet: `run.sh enable_faucet.js`.
 - Create accounts for Drone, Airport, Landlord: `run.sh create_account.js`. Save them anywhere.
-- Stop app to make file database free.
 - Save Airport private passphrase to database and landlord address: `run.sh save_airport_info.js`.
-- Run Lisk node: `make run`.
 - Update contracts for Airport and Landlord: `run.sh update_contract.js`. Don't forget to put generated accounts passphrases into file.
 - Simulate Drone landing: `run.sh drone_landing.js`. Don't forget to put Airport address and Drone passphrase into file. Don't forget to update phrase and address.
 - Simulate Carpet landing info: `run.sh carpet_landing.js`. Put Drone address to script.

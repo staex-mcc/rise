@@ -26,9 +26,9 @@ export const schema = {
 
 export type asset = {
 	drone: {
-		address: String;
+		address: string;
 	};
-	timestamp: String;
+	timestamp: string;
 };
 
 export class LandingAsset extends BaseAsset {

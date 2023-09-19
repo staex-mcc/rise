@@ -1,8 +1,8 @@
 import { apiClient, cryptography, transactions } from "lisk-sdk";
 
 // It should be embedded to Drone microchip.
-const dronePassphrase = "stomach fox model manage venture bullet caution iron caught enemy size author";
-const airportAddress = "f5754a6504732cc3d1520607d8e9495e8de3b1d8";
+const dronePassphrase = "road razor else aspect jealous enable burden tray merit comfort high security";
+const airportAddress = "1968e3a765b6a1c141753d67a9b5a1d9c8f7ff33";
 
 (async () => {
   const client = await apiClient.createWSClient("ws://127.0.0.1:12400/ws");

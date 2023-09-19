@@ -1,23 +1,14 @@
-import { apiClient, db } from "lisk-sdk";
+import { apiClient } from "lisk-sdk";
 
 (async () => {
   try {
-    const storage = new db.KVStore("airport.db");
-
-    let keys = ["name", "landlord_address", "passphrase"];
-    for (let key of keys) {
-      if (await storage.exists(key)) {
-        console.info(`${key} is already exists`);
-        process.exit(0);
-      }
-    }
-    
-    storage.put("name", "StaexSuperDuperPort");
-    storage.put("landlord_address", "77bd186762861ec26b908e303f4cd3e0c3c79cb1");
-    storage.put(
-      "passphrase",
-      "south pilot domain rack gap magnet dismiss bomb spike enough monitor negative",
-    );
+    const client = await apiClient.createWSClient("ws://127.0.0.1:12400/ws");
+    const res = await client.invoke("gateway:saveAirportInfo", {
+      name: "StaexSuperDuperPort",
+      landlordAddress: "b88f716ae5e4f0512627c7839a530e584068f468",
+      passphrase: "kit weird thrive man coast bottom sun rug either claw brown solution"
+    });
+    console.log(res);
   } catch (e) {
     console.error(e);
     process.exit(1);
