@@ -46,7 +46,10 @@ export class AirportModule extends BaseModule {
 		const tx = transaction as Transaction;
 		if (tx.moduleID === this.id && tx.assetID === 491) {
 			const asset: LandingAssetType = codec.decode(LandingAssetSchema, tx.asset);
-			this._channel.publish('airport:landing', { drone: asset.drone.address });
+			this._channel.publish('airport:landing', {
+				landingId: asset.landingId,
+				drone: asset.drone.address,
+			});
 		}
 	}
 }

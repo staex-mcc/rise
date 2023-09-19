@@ -1,7 +1,7 @@
 import { cryptography } from "lisk-sdk";
 
 const encryptedPassphrase = cryptography.encryptPassphraseWithPassword(
-  "tray glove head walk remind reduce olive rigid melody convince hundred report",
+  "margin cupboard verb hedgehog eyebrow alcohol shop else once saddle person vocal",
   "arbuz",
 );
 console.log(cryptography.stringifyEncryptedPassphrase(encryptedPassphrase));

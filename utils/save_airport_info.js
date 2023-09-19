@@ -5,9 +5,9 @@ import { apiClient } from "lisk-sdk";
     const client = await apiClient.createWSClient("ws://127.0.0.1:12400/ws");
     const res = await client.invoke("gateway:saveAirportInfo", {
       name: "StaexSuperDuperPort",
-      landlordAddress: "269a47776fcede8277e3c394f40c76dd8b8e8f81",
-      address: "56571c31b453604237e387d69d024601fa2efc3b", // airport address
-      passphrase: "cabin better coral define scene stove buzz sound dumb school figure thing"
+      landlordAddress: "2188327861e36935eaf40546ff5a9e2a9799f610",
+      address: "6dc84e7edf0369cb4dcb87fb1bdafbc243682d9a", // airport address
+      passphrase: "arrest pledge carbon student diet aim tortoise comfort decrease rice they opinion"
     });
     console.log(res);
   } catch (e) {

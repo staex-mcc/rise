@@ -4,7 +4,8 @@ import { apiClient, cryptography, transactions } from "lisk-sdk";
   const client = await apiClient.createWSClient("ws://127.0.0.1:12400/ws");
   try {
     const res = await client.invoke("gateway:landing", {
-      droneAddress: "15485123174c0f29a30272f9d1d0c3955743d1a7",
+      landingId: "asd_dsa",
+      droneAddress: "8d1d4b50fe15d30039f271208c9109511e3e7479",
     });
     console.log(res);
   } catch (e) {
