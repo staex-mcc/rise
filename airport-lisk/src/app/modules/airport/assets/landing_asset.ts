@@ -1,6 +1,6 @@
 import { BaseAsset, ApplyAssetContext, ValidateAssetContext } from 'lisk-sdk';
 
-export const schema = {
+export const Schema = {
 	$id: 'airport/landing-asset',
 	title: 'LandingAsset transaction asset for airport module',
 	type: 'object',
@@ -24,7 +24,7 @@ export const schema = {
 	},
 };
 
-export type asset = {
+export type Asset = {
 	drone: {
 		address: string;
 	};
@@ -34,7 +34,7 @@ export type asset = {
 export class LandingAsset extends BaseAsset {
 	public id = 491;
 	public name = 'landing';
-	public schema = schema;
+	public schema = Schema;
 	public validate({}: ValidateAssetContext<{}>): void {}
 	public async apply({}: ApplyAssetContext<{}>): Promise<void> {}
 }

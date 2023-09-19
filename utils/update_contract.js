@@ -9,10 +9,10 @@ import { apiClient, transactions } from "lisk-sdk";
         assetID: 872,
         fee: BigInt(transactions.convertLSKToBeddows("0.01")),
         asset: {
-          amount: 40,
+          amount: 65,
         }
       },
-      "defy eagle wisdom draw actor celery trip bunker palace jealous bleak pigeon",
+      "behind best hurdle truck panda soldier general start gloom print pitch grain",
     );
     await client.transaction.send(tx);
   } catch (e) {
