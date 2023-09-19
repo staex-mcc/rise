@@ -1,9 +1,10 @@
 import { apiClient, cryptography, transactions } from "lisk-sdk";
 
 // It should be embedded to Drone microchip.
-const droneAddress = "15485123174c0f29a30272f9d1d0c3955743d1a7";
-const dronePassphrase = "miracle sample cook act charge champion rhythm way stage squeeze crawl face";
-const airportAddress = "56571c31b453604237e387d69d024601fa2efc3b";
+const droneAddress = "8d1d4b50fe15d30039f271208c9109511e3e7479";
+const dronePassphrase = "wise fiber liar receive clog unhappy muffin chase vibrant chapter crunch planet";
+const airportAddress = "6dc84e7edf0369cb4dcb87fb1bdafbc243682d9a";
+const landingId = "asd_dsa";
 
 (async () => {
   const client = await apiClient.createWSClient("ws://127.0.0.1:12400/ws");
@@ -25,7 +26,7 @@ const airportAddress = "56571c31b453604237e387d69d024601fa2efc3b";
       asset: {
         amount: BigInt(transactions.convertLSKToBeddows(`${toPay}`)),
         recipientAddress: address,
-        data: "Pay for landing: " + droneAddress,
+        data: "PL:" + droneAddress + ":" + landingId,
       }
     }, dronePassphrase);
     await client.transaction.send(tx);

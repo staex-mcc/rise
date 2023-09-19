@@ -9,10 +9,10 @@ import { apiClient, transactions } from "lisk-sdk";
         assetID: 872,
         fee: BigInt(transactions.convertLSKToBeddows("0.01")),
         asset: {
-          amount: 65,
+          amount: 40,
         }
       },
-      "behind best hurdle truck panda soldier general start gloom print pitch grain",
+      "actress risk elbow oak dirt element decline explain boost dice chicken waste",
     );
     await client.transaction.send(tx);
   } catch (e) {

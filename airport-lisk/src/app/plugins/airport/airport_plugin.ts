@@ -78,6 +78,9 @@ export class AirportPlugin extends BasePlugin {
 							drone: {
 								address: params?.droneAddress as string,
 							},
+							landingId: params?.landingId as string,
+							airportAddress: info.address,
+							landlordAddress: info.landlordAddress,
 							timestamp: Date.now().toString(),
 						},
 					},
@@ -129,8 +132,9 @@ export class AirportPlugin extends BasePlugin {
 		this.client = await apiClient.createWSClient('ws://127.0.0.1:12400/ws');
 
 		channel.subscribe('airport:landing', async (params?: Record<string, unknown>) => {
-			let droneAddress = params?.drone as string;
-			await this.payToLandlord(droneAddress);
+			const landingId = params?.landingId as string;
+			const droneAddress = params?.drone as string;
+			await this.payToLandlord(landingId, droneAddress);
 		});
 		channel.subscribe('app:transaction:new', async (params?: Record<string, unknown>) => {
 			const buf = cryptography.hexToBuffer(params?.transaction as string);
@@ -148,7 +152,7 @@ export class AirportPlugin extends BasePlugin {
 		await this.airportStorage.close();
 	}
 
-	private async payToLandlord(droneAddress: string): Promise<void> {
+	private async payToLandlord(landingId: string, droneAddress: string): Promise<void> {
 		const info = await this.getPrivateInfo();
 		const res: Buffer = await this.client.invoke('app:getAccount', {
 			address: info.landlordAddress,
@@ -171,7 +175,7 @@ export class AirportPlugin extends BasePlugin {
 				asset: {
 					amount: BigInt(transactions.convertLSKToBeddows(`${toPay}`)),
 					recipientAddress: address,
-					data: 'Pay for land renting: ' + droneAddress,
+					data: 'PR:' + droneAddress + ':' + landingId,
 				},
 			},
 			info.passphrase,

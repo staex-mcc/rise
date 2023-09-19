@@ -17,8 +17,20 @@ export const Schema = {
 				},
 			},
 		},
-		timestamp: {
+		landingId: {
 			fieldNumber: 2,
+			dataType: 'string',
+		},
+		airportAddress: {
+			fieldNumber: 3,
+			dataType: 'string',
+		},
+		landlordAddress: {
+			fieldNumber: 4,
+			dataType: 'string',
+		},
+		timestamp: {
+			fieldNumber: 5,
 			dataType: 'string',
 		},
 	},
@@ -28,6 +40,9 @@ export type Asset = {
 	drone: {
 		address: string;
 	};
+	landingId: string;
+	airportAddress: string;
+	landlordAddress: string;
 	timestamp: string;
 };
 
