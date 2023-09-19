@@ -12,7 +12,7 @@ import { apiClient, transactions } from "lisk-sdk";
           amount: 65,
         }
       },
-      "lizard soft captain danger behind item dentist destroy oval cousin rebel day",
+      "behind best hurdle truck panda soldier general start gloom print pitch grain",
     );
     await client.transaction.send(tx);
   } catch (e) {

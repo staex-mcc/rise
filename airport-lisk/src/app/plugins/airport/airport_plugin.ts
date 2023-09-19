@@ -15,14 +15,34 @@ import {
 } from 'lisk-sdk';
 import { AccountType } from '../../modules/airport/airport_module';
 import {
-	schema as LandingAssetSchema,
-	asset as LandingAsset,
+	Schema as LandingAssetSchema,
+	Asset as LandingAsset,
 } from '../../modules/airport/assets/landing_asset';
 
 type PrivateInfo = {
 	name: string;
 	landlordAddress: string;
+	address: string;
 	passphrase: string;
+};
+
+type TokenModuleAsset = {
+	amount: number;
+	recipientAddress: Buffer;
+	data: string;
+};
+
+type TransferAsset = {
+	amount: string;
+	recipient: string;
+	data: string;
+};
+
+type Tx = {
+	type: string;
+	sender: string;
+	transfer: TransferAsset | undefined;
+	landing: LandingAsset | undefined;
 };
 
 export class AirportPlugin extends BasePlugin {
@@ -73,18 +93,25 @@ export class AirportPlugin extends BasePlugin {
 					limit: 1000,
 				});
 				const txStream = this.txStorage.createReadStream({ keys: true, values: true, limit: 1000 });
-				let entities: Tx[] = [];
+				const entities: Tx[] = [];
 				for await (const chunk of landingStream) {
-					let c = (chunk as unknown) as { value: Buffer };
-					let x = processTx('landing', c.value);
+					const c = (chunk as unknown) as { value: Buffer };
+					const x = processTx('landing', c.value);
 					entities.push(x);
 				}
 				for await (const chunk of txStream) {
-					let c = (chunk as unknown) as { value: Buffer };
-					let x = processTx('transaction', c.value);
+					const c = (chunk as unknown) as { value: Buffer };
+					const x = processTx('transaction', c.value);
 					entities.push(x);
 				}
 				return entities;
+			},
+			saveAirportInfo: async (params?: Record<string, unknown>) => {
+				await this.airportStorage.put('name', params?.name as Buffer);
+				await this.airportStorage.put('landlord_address', params?.landlordAddress as Buffer);
+				await this.airportStorage.put('address', params?.address as Buffer);
+				await this.airportStorage.put('passphrase', params?.passphrase as Buffer);
+				return {};
 			},
 		};
 	}
@@ -101,12 +128,13 @@ export class AirportPlugin extends BasePlugin {
 		this.txStorage = new db.KVStore('../root/.lisk/airport-lisk/transactions.db');
 		this.client = await apiClient.createWSClient('ws://127.0.0.1:12400/ws');
 
-		channel.subscribe('airport:landing', async () => {
-			await this.payToLandlord();
+		channel.subscribe('airport:landing', async (params?: Record<string, unknown>) => {
+			let droneAddress = params?.drone as string;
+			await this.payToLandlord(droneAddress);
 		});
 		channel.subscribe('app:transaction:new', async (params?: Record<string, unknown>) => {
 			const buf = cryptography.hexToBuffer(params?.transaction as string);
-			const tx = this.client.transaction.decode(buf) as Transaction;
+			const tx: Transaction = this.client.transaction.decode(buf);
 			const id = cryptography.bufferToHex(tx.id);
 			if (tx.moduleID === 2 && tx.assetID === 0) {
 				await this.txStorage.put(id, buf);
@@ -120,11 +148,11 @@ export class AirportPlugin extends BasePlugin {
 		await this.airportStorage.close();
 	}
 
-	private async payToLandlord(): Promise<void> {
+	private async payToLandlord(droneAddress: string): Promise<void> {
 		const info = await this.getPrivateInfo();
-		const res = (await this.client.invoke('app:getAccount', {
+		const res: Buffer = await this.client.invoke('app:getAccount', {
 			address: info.landlordAddress,
-		})) as Buffer;
+		});
 		const accObject = this.client.account.decode(res);
 		const accJSON = this.client.account.toJSON(accObject) as AccountType;
 		// As we have not endless amount of money we reduce any amount by 1000 to avoid no tokens error.
@@ -143,7 +171,7 @@ export class AirportPlugin extends BasePlugin {
 				asset: {
 					amount: BigInt(transactions.convertLSKToBeddows(`${toPay}`)),
 					recipientAddress: address,
-					data: 'Pay for land renting.',
+					data: 'Pay for land renting: ' + droneAddress,
 				},
 			},
 			info.passphrase,
@@ -161,9 +189,10 @@ export class AirportPlugin extends BasePlugin {
 
 		const name = (await this.airportStorage.get('name')).toString();
 		const landlordAddress = (await this.airportStorage.get('landlord_address')).toString();
+		const address = (await this.airportStorage.get('address')).toString();
 		const passphrase = (await this.airportStorage.get('passphrase')).toString();
 
-		return { name, landlordAddress, passphrase };
+		return { name, landlordAddress, address, passphrase };
 	}
 }
 
@@ -189,35 +218,16 @@ const tokenModuleSchema = {
 	},
 };
 
-type RawTransferAsset = {
-	amount: number;
-	recipientAddress: Buffer;
-	data: String;
-};
-
-type TransferAsset = {
-	amount: String;
-	recipient: String;
-	data: String;
-};
-
-type Tx = {
-	type: String;
-	sender: String;
-	transfer: TransferAsset | undefined;
-	landing: LandingAsset | undefined;
-};
-
-const processTx = (name: String, val: Buffer): Tx => {
-	const tx = codec.decode(transactionSchema, val) as Transaction;
+const processTx = (name: string, val: Buffer): Tx => {
+	const tx: Transaction = codec.decode(transactionSchema, val);
 	const sender = cryptography.bufferToHex(tx.senderPublicKey);
 	let transfer: TransferAsset | undefined;
 	let landing: LandingAsset | undefined;
 	if (name === 'landing') {
-		const asset = codec.decode(LandingAssetSchema, tx.asset) as LandingAsset;
+		const asset: LandingAsset = codec.decode(LandingAssetSchema, tx.asset);
 		landing = asset;
 	} else {
-		const asset = codec.decode(tokenModuleSchema, tx.asset) as RawTransferAsset;
+		const asset: TokenModuleAsset = codec.decode(tokenModuleSchema, tx.asset);
 		const address = cryptography.bufferToHex(asset.recipientAddress);
 		transfer = {
 			amount: transactions.convertBeddowsToLSK(asset.amount.toString(10)),

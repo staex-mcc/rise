@@ -1,6 +1,10 @@
-import { BaseModule, Transaction } from 'lisk-sdk';
+import { BaseModule, Transaction, codec } from 'lisk-sdk';
 import { ContractAsset, AssetType as ContractAssetType } from './assets/contract_asset';
-import { LandingAsset } from './assets/landing_asset';
+import {
+	LandingAsset,
+	Asset as LandingAssetType,
+	Schema as LandingAssetSchema,
+} from './assets/landing_asset';
 
 export type AccountType = {
 	address: Buffer;
@@ -41,7 +45,8 @@ export class AirportModule extends BaseModule {
 	public async afterTransactionApply({ transaction }) {
 		const tx = transaction as Transaction;
 		if (tx.moduleID === this.id && tx.assetID === 491) {
-			this._channel.publish('airport:landing', {});
+			const asset: LandingAssetType = codec.decode(LandingAssetSchema, tx.asset);
+			this._channel.publish('airport:landing', { drone: asset.drone.address });
 		}
 	}
 }
