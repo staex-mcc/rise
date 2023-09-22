@@ -2,13 +2,10 @@
 .vscode
 
 accounts.txt
+node_modules
 /airport-lisk/config/default/accounts.json
 /airport-lisk/config/default/forging_info.json
 /airport-lisk/config/default/genesis_block.json
 /airport-lisk/config/default/password.json
+/airport-lisk/state
 /airport-lisk-data
-/drone-rs/target
-/utils/node_modules
-/utils/airport.db
-/utils/landings.db
-/utils/transactions.db

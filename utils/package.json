@@ -1,8 +1,0 @@
-{
-  "name": "utils",
-  "type": "module",
-  "dependencies": {
-    "lisk-sdk": "^5.2.2",
-    "qrcode": "1.5.3"
-  }
-}

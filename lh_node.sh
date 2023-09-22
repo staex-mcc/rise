@@ -1,7 +1,9 @@
-#!/bin/bash
-
-docker run --rm -it \
-  --user "$(id -u):$(id -g)" \
-  -v "${PWD}/airport-lisk:/airport-lisk" \
-  --entrypoint="" --workdir /airport-lisk \
-  node:16 $@
+#!/bin/sh
+exec docker run \
+    --rm \
+    --network host \
+    --user "$(id -u):$(id -g)" \
+    --volume "$PWD:/workdir" \
+    --entrypoint= \
+    --workdir /workdir \
+    node:16 "$@"
