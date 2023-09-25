@@ -71,7 +71,7 @@ textarea {
     border: none;
     outline: none;
     margin: 2px;
-    width: 25rem;
+    width: 26rem;
 }
 
 textarea {
@@ -364,4 +364,18 @@ table {
 th {
     font-weight: bold;
     text-align: left;
+}
+
+ul.radio {
+    list-style: none;
+}
+
+ul.radio label {
+    display: inline-block;
+    text-align: left;
+}
+
+ul.radio label::before {
+    content: ' ';
+    white-space: pre;
 }

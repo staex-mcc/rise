@@ -126,9 +126,9 @@ export class AirportPlugin extends BasePlugin {
 		return [];
 	}
 	public async load(channel: BaseChannel): Promise<void> {
-		this.airportStorage = new db.KVStore('../root/.lisk/airport-lisk/airport.db');
-		this.landingStorage = new db.KVStore('../root/.lisk/airport-lisk/landings.db');
-		this.txStorage = new db.KVStore('../root/.lisk/airport-lisk/transactions.db');
+		this.airportStorage = new db.KVStore('/var/lib/airport-lisk/airport.db');
+		this.landingStorage = new db.KVStore('/var/lib/airport-lisk/landings.db');
+		this.txStorage = new db.KVStore('/var/lib/airport-lisk/transactions.db');
 		this.client = await apiClient.createWSClient('ws://127.0.0.1:12400/ws');
 
 		channel.subscribe('airport:landing', async (params?: Record<string, unknown>) => {

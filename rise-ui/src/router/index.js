@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import DroneQR from '@/views/DroneQR.vue'
+import QRCode from '@/views/QRCode.vue'
 import Airport from '@/views/Airport.vue'
 import Landlord from '@/views/Landlord.vue'
+import Register from '@/views/Register.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -9,12 +10,17 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            redirect: { name: 'drone' },
+            redirect: { name: 'register' },
         },
         {
-            path: '/drone',
-            name: 'drone',
-            component: DroneQR,
+            path: '/register',
+            name: 'register',
+            component: Register,
+        },
+        {
+            path: '/qrcode',
+            name: 'qrcode',
+            component: QRCode,
         },
         {
             path: '/airport',

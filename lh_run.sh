@@ -3,7 +3,7 @@ exec docker run \
     --rm \
     -it \
     --volume "$PWD:/workdir" \
-    --volume "$PWD/airport-lisk-data:/root/.lisk/airport-lisk" \
+    --volume "$PWD/airport-lisk-data:/var/lib/airport-lisk" \
     --entrypoint= \
     --workdir /workdir \
     --user "$(id -u):$(id -g)" \

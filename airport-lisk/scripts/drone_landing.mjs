@@ -2,12 +2,13 @@ import { apiClient, cryptography, transactions } from 'lisk-sdk';
 import { readFileSync } from 'fs';
 
 // It should be embedded to Drone microchip.
-const droneAccount = readFileSync('state/drone.json');
-const airportAccount = readFileSync('state/airport.json');
+const droneAccount = JSON.parse(readFileSync('state/drone.json'));
+const airportAccount = JSON.parse(readFileSync('state/airport.json'));
 const landingId = 'asd_dsa';
 
 (async () => {
-	const client = await apiClient.createWSClient('ws://127.0.0.1:12400/ws');
+	const client = await apiClient.createWSClient('wss://rise.staex.io/ws');
+    await client.invoke("faucet:authorize", { password: "arbuz", enable: true });
 	try {
 		const res = await client.invoke('app:getAccount', { address: airportAccount.address });
 		const accObject = client.account.decode(res);
@@ -28,6 +29,7 @@ const landingId = 'asd_dsa';
 					amount: BigInt(transactions.convertLSKToBeddows(`${toPay}`)),
 					recipientAddress: address,
 					data: 'PL:' + droneAccount.address + ':' + landingId,
+                    timestamp: Date.now().toString(),
 				},
 			},
 			droneAccount.passphrase,

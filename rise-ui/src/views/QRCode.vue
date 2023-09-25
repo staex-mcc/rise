@@ -33,7 +33,7 @@ export default {
 </script>
 
 <template>
-    <h1>Register your drone or airport</h1>
+    <h1>Get your QR code</h1>
     <div class="row">
         <label for="walletAddress">Wallet address</label>
         <input type="text" name="walletAddress" id="walletAddress" v-model="walletAddress" />
