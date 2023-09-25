@@ -5,19 +5,28 @@
 
 ## Usage
 
-- Remove **airport-lisk-data/\***: `rm -rf airport-lisk-data/*`. Remove **utils/*.db**. Remove **airport-lisk/config/default/*** _EXCEPT_ config.json. Then: `make create`.
-- Update genesis block: `make update_genesis`.
-- Get any passphrase from **config/default/accounts.json**.
-- Pass this passphrase to **utils/encrypt_passphrase.js** and execute: `run.sh encrypt_passphrase.js`.
-- Put encrypted passphrase to **config/default/accounts.json** to _Faucet_ plugin configuration.
-- Run Lisk node: `make run`.
-- Enable Faucet: `run.sh enable_faucet.js`.
-- Create accounts for Drone, Airport, Landlord: `run.sh create_account.js`. Save them anywhere.
-- Save Airport private passphrase to database and landlord address: `run.sh save_airport_info.js`.
-- Update contracts for Airport and Landlord: `run.sh update_contract.js`. Don't forget to put generated accounts passphrases into file.
-- Simulate Drone landing: `run.sh drone_landing.js`. Don't forget to put Airport address and Drone passphrase into file. Don't forget to update phrase and address.
-- Simulate Carpet landing info: `run.sh carpet_landing.js`. Put Drone address to script.
-- Get demo results by: `run.sh demo_results.js`.
+```bash
+cd airport-list
+../lh_node.sh npm install
+cd ..
+# cleanup
+make clean
+# update genesis block
+make update_genesis
+cd airport-list
+# generate faucet plugin passphrase
+../lh_node.sh node scripts/encrypt_passphrase.mjs
+cd ..
+# run lisk node
+make run
+../lh_node.sh node scripts/init.mjs
+# simulate drone landing
+../lh_node.sh node scripts/drone_landing.mjs
+# simulate carpet landing
+../lh_node.sh node scripts/carpet_landing.mjs
+# show demo results
+../lh_node.sh node scripts/demo_results.mjs
+```
 
 ## Scripts
 
@@ -25,3 +34,26 @@
 - **lh_node.sh** - to execute container with node binary.
 - **lh_ports.sh** - to execute container with ./bin/run and open ports.
 - **lh_run.sh** - to execute container with ./bin.run.
+
+# Utils
+
+## Faucet & Accounts
+
+In order to use newly created account we need to feed them with tokens. To do it we need std Faucet plugin.
+
+To properly start Faucet plugin requires to have encrypted passphrase of genesis block: `./run.sh node encrypt_passphrase.js`. After that you can put it to the config file. You can choose eny passphrase in **config/default/accounts.json**.
+
+Also, to start Faucet itself, you need to enable it: `./run.sh node enable_faucet.js`.
+
+Then you can go to [Faucet website](http://localhost:4006) and feed your account.
+
+## Scripts
+
+- **create_accounts.js** - to create and feed account with Faucet.
+- **drone_landing.js** - to simulate Drone landing.
+- **enable_faucet.js** - to enable Faucet.
+- **encrypt_passphrase.js** - To encrypt passphrase with password.
+- **update_contract.js** - To update contract.
+- **save_airport_info.js** - Save Airport information to database.
+- **carpet_landing.js** - Simulate sending info from Carpet to Airport plugin.
+- **demo_results.js** - Show demo results.

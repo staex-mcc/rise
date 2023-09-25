@@ -1,7 +1,10 @@
 #!/bin/bash
-
-docker run --rm -it \
-  -v "${PWD}/airport-lisk:/airport-lisk" \
-  -v "${PWD}/airport-lisk-data:/root/.lisk/airport-lisk" \
-  --entrypoint="" --workdir /airport-lisk \
-  node:16 ./bin/run $@
+exec docker run \
+    --rm \
+    -it \
+    --volume "$PWD:/workdir" \
+    --volume "$PWD/airport-lisk-data:/var/lib/airport-lisk" \
+    --entrypoint= \
+    --workdir /workdir \
+    --user "$(id -u):$(id -g)" \
+    node:16 ./bin/run "$@"

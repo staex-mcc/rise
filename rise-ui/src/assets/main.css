@@ -1,0 +1,381 @@
+@import '../../node_modules/normalize.css/normalize.css';
+
+:root {
+    --staex-dark-pacific-blue: rgb(0, 47, 59);
+    --staex-golden-yellow: rgb(233, 221, 21);
+    --staex-light-pacific-blue: rgb(0, 157, 196);
+    --staex-medium-pacific-blue: rgb(0, 86, 104);
+    --staex-metallic-gold: rgb(227, 220, 122);
+    --staex-pacific-blue: rgb(0, 63, 78);
+    --staex-stardust-silver: rgb(228, 233, 242);
+    --staex-white: rgb(255, 255, 255);
+    --staex-red: rgb(192, 64, 64);
+    --staex-green: rgb(120, 185, 143);
+    --staex-yellow: rgb(192, 192, 128);
+    --staex-gray: rgb(192, 192, 192);
+}
+
+html {
+    font-family: Roboto, Montserrat, sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    color: var(--staex-dark-pacific-blue);
+    background-color: var(--staex-stardust-silver);
+    font-size: 14pt;
+    line-height: 1.5;
+    margin: 0px;
+    padding: 0px;
+    text-rendering: optimizeLegibility;
+}
+
+p {
+    margin: 0px 0px 0.5rem 0px;
+}
+
+h1 {
+    padding: 0;
+    margin: 1.5rem 0 0 0;
+    font-size: 2rem;
+    hyphens: none;
+    font-weight: bold;
+}
+
+a {
+    text-decoration: underline;
+}
+
+a:link,
+a:visited,
+a:active {
+    color: var(--staex-dark-pacific-blue);
+}
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+}
+
+input:not([type]),
+input[type='text'],
+input[type='email'],
+input[type='password'],
+textarea {
+    background: var(--staex-white);
+    color: var(--staex-dark-pacific-blue);
+    border-radius: 30px;
+    padding: 10px 20px 10px 20px;
+    border: none;
+    outline: none;
+    margin: 2px;
+    width: 26rem;
+}
+
+textarea {
+    word-wrap: break-word;
+    text-wrap: unrestricted;
+}
+
+textarea:focus,
+input:focus,
+button:focus {
+    outline: 2px solid var(--staex-metallic-gold);
+}
+
+button:disabled {
+    opacity: 0.75;
+}
+
+button {
+    border-radius: 30px;
+    padding: 10px 20px 10px 20px;
+    background: var(--staex-metallic-gold);
+    color: var(--staex-dark-pacific-blue);
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.logo {
+    max-height: 4rem;
+}
+
+nav .logo {
+    max-height: 2rem;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+}
+
+nav {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+nav li a {
+    padding: 4px;
+}
+
+#app {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0px;
+}
+
+@media screen and (max-width: 1280px) {
+    nav {
+        margin-left: 0rem;
+    }
+    nav ul {
+        display: block;
+        margin-left: 0px;
+    }
+    nav li {
+        display: block;
+        margin-left: 0px;
+        margin-right: 1rem;
+    }
+    footer ul {
+        display: block;
+        margin-left: 0px;
+    }
+    footer li {
+        display: block;
+        margin-left: 0px;
+        margin-right: 1rem;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    nav {
+        width: 1280px;
+        margin: auto;
+    }
+    nav.login {
+        width: auto;
+    }
+    nav ul {
+        display: inline-block;
+        margin-left: 0px;
+    }
+    nav li {
+        margin-left: 1rem;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    footer ul {
+        display: inline-block;
+        margin-left: 0px;
+    }
+    footer li {
+        margin-left: 1rem;
+        display: inline-block;
+    }
+    footer li:first-child {
+        margin-left: 0rem;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.center-vertically {
+    width: min(1280px, 100vw);
+    height: 100vh;
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+}
+
+.center {
+    text-align: center;
+}
+
+.login-box {
+    display: inline-block;
+    text-align: left;
+}
+
+label {
+    display: block;
+}
+
+.error {
+    padding: 4px;
+    background: var(--staex-red);
+    color: var(--staex-stardust-silver);
+}
+
+.success {
+    padding: 4px;
+    background: var(--staex-green);
+    color: var(--staex-dark-pacific-blue);
+}
+
+.top {
+    vertical-align: top;
+}
+
+.warning {
+    width: 19rem;
+    display: inline-block;
+    padding: 4px;
+    color: var(--staex-stardust-silver);
+    background-color: var(--staex-red);
+    text-align: left;
+}
+
+.suggestions {
+    width: 19rem;
+    display: inline-block;
+    padding: 4px;
+    background-color: var(--staex-green);
+    white-space: pre-wrap;
+    text-align: left;
+}
+
+.scores {
+    width: 19rem;
+    height: 8px;
+    display: inline-block;
+    text-align: justify;
+}
+
+#score {
+    margin: 0;
+}
+
+.score {
+    width: 4rem;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    background-color: var(--staex-gray);
+}
+
+.score:not(:first-child) {
+    margin-left: 1rem;
+}
+
+.score-0 {
+    background-color: var(--staex-gray);
+}
+
+.score-1 {
+    background-color: var(--staex-red);
+}
+
+.score-2,
+.score-3 {
+    background-color: var(--staex-yellow);
+}
+
+.score-4 {
+    background-color: var(--staex-green);
+}
+
+.key-warning {
+    padding: 4px;
+    background-color: var(--staex-red);
+    color: var(--staex-stardust-silver);
+    max-width: 39rem;
+}
+
+pre {
+    font-family: 'Roboto Mono', monospace;
+    background-color: var(--staex-dark-pacific-blue);
+    color: var(--staex-stardust-silver);
+    border-radius: 8px;
+    padding: 8px;
+    margin: 0;
+    overflow-x: scroll;
+    white-space: pre;
+    tab-size: 4;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    text-align: left;
+}
+
+.cf-turnstile {
+    display: inline-block;
+}
+
+footer {
+    font-size: 8pt;
+    margin-top: 1.5rem;
+}
+
+.not-found {
+    text-align: center;
+}
+
+label.right {
+    display: inline-block;
+    text-align: left;
+}
+
+label.right::before {
+    content: ' ';
+    white-space: pre;
+}
+
+ul.subscription-plans {
+    list-style-type: none;
+}
+
+.key-left {
+    display: inline-block;
+    text-align: right;
+}
+
+.row {
+    margin-bottom: 0.5rem;
+}
+
+.router-link-active {
+    cursor: default;
+    text-decoration: none;
+    font-weight: 900;
+}
+
+.justify {
+    justify-content: space-between;
+    display: flex;
+}
+
+.button-link {
+    background: var(--staex-stardust-silver);
+    color: var(--staex-dark-pacific-blue);
+    border-radius: 30px;
+    padding: 10px 20px 10px 20px;
+    border: none;
+    outline: none;
+    cursor: auto;
+}
+
+table {
+    border: 0;
+}
+
+th {
+    font-weight: bold;
+    text-align: left;
+}
+
+ul.radio {
+    list-style: none;
+}
+
+ul.radio label {
+    display: inline-block;
+    text-align: left;
+}
+
+ul.radio label::before {
+    content: ' ';
+    white-space: pre;
+}
