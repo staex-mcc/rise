@@ -8,4 +8,4 @@ exec docker run \
     -v "${PWD}/airport-lisk:/airport-lisk" \
     -v "${PWD}/airport-lisk-data:/var/lib/airport-lisk" \
     --entrypoint="" --workdir /airport-lisk \
-    node:16 ./bin/run "$@"
+    node:18 ./bin/run "$@"

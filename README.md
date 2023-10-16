@@ -6,14 +6,14 @@
 ## Usage
 
 ```bash
-cd airport-list
+cd airport-lisk
 ../lh_node.sh npm install
 cd ..
 # cleanup
 make clean
 # update genesis block
 make update_genesis
-cd airport-list
+cd airport-lisk
 # generate faucet plugin passphrase
 ../lh_node.sh node scripts/encrypt_passphrase.mjs
 cd ..

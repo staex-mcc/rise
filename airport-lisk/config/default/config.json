@@ -5,11 +5,10 @@
 		"logLevel": "info"
 	},
 	"rpc": {
-		"modes": [
-			"ws"
-		],
+		"modes": ["ws", "ipc"],
 		"port": 12400,
-		"host": "0.0.0.0"
+		"host": "0.0.0.0",
+		"allowedMethods": ["*"]
 	},
 	"network": {
 		"version": "1.0",
@@ -38,5 +37,18 @@
 		}
 	},
 	"modules": {},
-	"plugins": {}
+	"plugins": {
+		"faucet": {
+			"encryptedPrivateKey": "kdf=argon2id&cipher=aes-128-gcm&version=1&ciphertext=6c0b48abdb462bcb54869d31a5a053542a0ba09cbd718211fb858e91f122d011eef29757169b6e29cdecb05e844972477137bdf0310007b38016e7a58564b5ca93009ff2f06f7be475736d5cfaf8381fc35c9dcabbc64845eacdd9227f8c64b292024597276e68c9bb9ff4c2c014cd1bb26b25d0618e57dd4838bbf4067374ff1794a1b8aee7527228fe42066a1f67834e3a242f22be2091254153546a76a3bb38480f68&mac=c6d27e84678bdb9a3535416114374fd229914792b92ba14c5703b9a7f63c969e&salt=4519e068f7a2377c&iv=710e3dd3ef6eafc6d95bce215d912671&tag=6529f2373a543377f8d6e5758ebb8eeb&iterations=1&parallelism=4&memorySize=2097023",
+			"tokenID": "3457812300000000",
+			"captchaSitekey": "",
+			"captchaSecretkey": "",
+			"port": 4006,
+			"host": "0.0.0.0",
+			"applicationUrl": "ws://127.0.0.1:12400/ws",
+			"fee": "0.1",
+			"amount": "100",
+			"tokenPrefix": "lsk"
+		}
+	}
 }

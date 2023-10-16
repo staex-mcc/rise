@@ -1,5 +1,5 @@
 run:
-	./lh_ports.sh start --enable-dashboard-plugin --enable-faucet-plugin
+	./lh_ports.sh start --enable-faucet-plugin
 
 update_genesis:
 	./scripts/update-genesis-block.sh

@@ -6,4 +6,4 @@ exec docker run \
     --volume "$PWD:/workdir" \
     --entrypoint= \
     --workdir /workdir \
-    node:16 "$@"
+    node:18 "$@"
