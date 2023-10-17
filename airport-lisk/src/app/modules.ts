@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { Application } from 'lisk-sdk';
-import { AirportModule } from './modules/airport/airport_module';
+import { AirportModule } from './modules/airport/module';
 
 export const registerModules = (app: Application): void => {
-	app.registerModule(AirportModule);
+	app.registerModule(new AirportModule());
 };

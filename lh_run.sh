@@ -7,4 +7,4 @@ exec docker run \
     --entrypoint= \
     --workdir /workdir \
     --user "$(id -u):$(id -g)" \
-    node:16 ./bin/run "$@"
+    node:18 ./bin/run "$@"

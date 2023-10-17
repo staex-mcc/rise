@@ -11,7 +11,7 @@ function sleep(ms) {
 }
 
 async function enableFaucet(client) {
-    await client.invoke("faucet:authorize", { password: "arbuz", enable: true });
+	await client.invoke('faucet:authorize', { password: 'arbuz', enable: true });
 }
 
 // create drone, airport, landlord accounts
@@ -24,7 +24,7 @@ async function createAccounts(client) {
 			const account = {
 				address: binaryAddress,
 				passphrase: genPassphrase,
-                publicKey: cryptography.bufferToHex(res.publicKey),
+				publicKey: cryptography.bufferToHex(res.publicKey),
 			};
 			accounts[accountName] = account;
 			await mkdir(stateDir, { recursive: true, mode: 0o755 });
@@ -63,7 +63,7 @@ async function updateContracts(client) {
 					amount: 40,
 				},
 			},
-            accounts[accountName].passphrase
+			accounts[accountName].passphrase,
 		);
 		await client.transaction.send(tx);
 	}
@@ -71,7 +71,7 @@ async function updateContracts(client) {
 
 (async () => {
 	const client = await apiClient.createWSClient('wss://rise.staex.io/ws');
-    await enableFaucet(client)
+	await enableFaucet(client);
 	await createAccounts(client);
 	await createAirport(client);
 	await updateContracts(client);

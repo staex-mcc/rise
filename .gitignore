@@ -3,9 +3,7 @@
 
 accounts.txt
 node_modules
-/airport-lisk/config/default/accounts.json
-/airport-lisk/config/default/forging_info.json
-/airport-lisk/config/default/genesis_block.json
-/airport-lisk/config/default/password.json
+/airport-lisk/config/default/genesis_block.blob
 /airport-lisk/state
 /airport-lisk-data
+/utils

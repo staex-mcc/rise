@@ -8,7 +8,7 @@ const landingId = 'asd_dsa';
 
 (async () => {
 	const client = await apiClient.createWSClient('wss://rise.staex.io/ws');
-    await client.invoke("faucet:authorize", { password: "arbuz", enable: true });
+	await client.invoke('faucet:authorize', { password: 'arbuz', enable: true });
 	try {
 		const res = await client.invoke('app:getAccount', { address: airportAccount.address });
 		const accObject = client.account.decode(res);
@@ -29,7 +29,7 @@ const landingId = 'asd_dsa';
 					amount: BigInt(transactions.convertLSKToBeddows(`${toPay}`)),
 					recipientAddress: address,
 					data: 'PL:' + droneAccount.address + ':' + landingId,
-                    timestamp: Date.now().toString(),
+					timestamp: Date.now().toString(),
 				},
 			},
 			droneAccount.passphrase,
