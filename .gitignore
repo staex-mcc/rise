@@ -9,3 +9,4 @@ node_modules
 /airport-lisk/config/default/password.json
 /airport-lisk/state
 /airport-lisk-data
+/rise-ui/.vite
