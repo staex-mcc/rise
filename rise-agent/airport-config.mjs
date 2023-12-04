@@ -1,6 +1,6 @@
 export default {
-    //wsClientUrl: "wss://rise.staex.io/ws",
-    wsClientUrl: "ws://localhost:5173/ws",
+    wsClientUrl: "wss://rise.staex.io/ws",
+    //wsClientUrl: "ws://localhost:5173/ws",
     videoCaptureOptions: {
         puppeteerOptions: {
             executablePath:
@@ -9,8 +9,7 @@ export default {
     },
     airport: {
         landingId: "dummy-landing-id",
-        landlordAddress: "f3b9ad6ef17339741fd1215104d7a0e6fff56046",
-        // victory area axis lion term figure enroll unknown puppy rib east rocket
-        passphrase: "minute dawn runway trial hill armed deer narrow prepare fog throw dance",
+        landlordAddress: "fe929d41e7d31771326e33e329ab9ea4c9879339",
+        passphrase: "finish shift achieve hammer one range phrase awful chat army flavor witness",
     }
 };
