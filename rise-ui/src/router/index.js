@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import QRCode from '@/views/QRCode.vue'
 import Airport from '@/views/Airport.vue'
-import Landlord from '@/views/Landlord.vue'
 import Register from '@/views/Register.vue'
 import NewContract from '@/views/NewContract.vue'
 
@@ -32,11 +31,6 @@ const router = createRouter({
             path: '/airport',
             name: 'airport',
             component: Airport,
-        },
-        {
-            path: '/landlord',
-            name: 'landlord',
-            component: Landlord,
         },
     ],
 })
