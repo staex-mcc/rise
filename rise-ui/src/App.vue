@@ -19,6 +19,7 @@ export default {
                 <li><RouterLink to="/new-contract">Contract</RouterLink></li>
                 <li><RouterLink to="/qrcode">QR code</RouterLink></li>
                 <li><RouterLink to="/airport">Airport</RouterLink></li>
+                <li><RouterLink to="/video">Video</RouterLink></li>
             </ul>
         </nav>
     </header>
