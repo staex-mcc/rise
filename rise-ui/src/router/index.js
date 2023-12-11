@@ -3,6 +3,7 @@ import QRCode from '@/views/QRCode.vue'
 import Airport from '@/views/Airport.vue'
 import Register from '@/views/Register.vue'
 import NewContract from '@/views/NewContract.vue'
+import Video from '@/views/Video.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -31,6 +32,11 @@ const router = createRouter({
             path: '/airport',
             name: 'airport',
             component: Airport,
+        },
+        {
+            path: '/video',
+            name: 'video',
+            component: Video,
         },
     ],
 })

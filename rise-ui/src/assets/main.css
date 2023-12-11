@@ -379,3 +379,8 @@ ul.radio label::before {
     content: ' ';
     white-space: pre;
 }
+
+video {
+    border-radius: 4px;
+    width: 960px;
+}
