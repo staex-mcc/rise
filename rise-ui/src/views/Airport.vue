@@ -1,5 +1,5 @@
 <script>
-import { apiClient } from '@/../node_modules/@liskhq/lisk-client/dist-browser/index.min.js'
+import { createApiClient } from '@/client.js'
 export default {
     data() {
         return {
@@ -8,51 +8,20 @@ export default {
             error: '',
         }
     },
-    watch: {
-        airportAddress(value) {
-            value = value.trim().toLowerCase()
+    methods: {
+        showLandings: async function () {
             this.error = ''
-            this.airportAddress = value
-            if (value === '') {
+            if (this.airportAddress === '') {
                 this.transactions = []
-            } else if (!value.match(/^[0-9a-f]{40}$/)) {
+            } else if (!this.airportAddress.match(/^[0-9a-f]{40}$/)) {
                 this.transactions = []
                 this.error = 'The wallet address should be a 40 characters long hexadecimal string.'
             } else {
-                ;(async () => {
-                    let protocol = 'wss:'
-                    if (location.protocol === 'http:') {
-                        protocol = 'ws:'
-                    }
-                    const client = await apiClient.createWSClient(
-                        `${protocol}//${location.host}/ws`,
-                    )
-                    const transactions = await client.invoke('gateway:transactions', {})
-                    console.log(transactions)
-                    this.transactions = transactions.filter((tx) => {
-                        switch (tx.type) {
-                            case 'landing':
-                                return tx.landing.airportAddress === this.airportAddress
-                            case 'transaction':
-                                return tx.transfer.recipient === this.airportAddress && tx.transfer.data !== ''
-                            default:
-                                return false
-                        }
-                    }).map((tx) => {
-                        switch (tx.type) {
-                            case 'landing':
-                                return {
-                                    timestamp: tx.landing.timestamp,
-                                    message: `Drone ${tx.landing.drone.address} has landed.`,
-                                }
-                            case 'transaction':
-                                return {
-                                    timestamp: 0,//tx.transfer.timestamp,
-                                    message: `Drone ${tx.transfer.data.split(':')[1]} has paid ${tx.transfer.amount} for landing.`,
-                                }
-                        }
-                    })
-                })()
+                const client = await createApiClient()
+                let transactions = await client.invoke('gateway:transactions', {})
+                transactions.sort((a, b) => a.timestamp > b.timestamp)
+                this.transactions = transactions
+                console.log(this.transactions)
             }
         },
     },
@@ -65,13 +34,29 @@ export default {
         <label for="airportAddress">Airport wallet address</label>
         <input type="text" name="airportAddress" id="airportAddress" v-model="airportAddress" />
     </div>
+    <div class="row">
+        <button type="button" @click="showLandings">Show</button>
+    </div>
     <div class="row error" v-if="error !== ''">{{ error }}</div>
     <div class="row" v-if="transactions.length !== 0">
-        <label>Recent transactions</label>
-        <ul>
-            <li v-for="tx in transactions" :key="tx.sender">
-                {{ tx.message }}
-            </li>
-        </ul>
+        <h2>Recent events</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Event</th>
+                    <th>Landing ID</th>
+                    <th>Drone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="tx in transactions" :key="tx.timestamp">
+                    <td>{{ new Date(tx.timestamp).toISOString() }}</td>
+                    <td>{{ tx.event }}</td>
+                    <td>{{ tx.landingId }}</td>
+                    <td>{{ tx.droneAddress }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>

@@ -15,10 +15,10 @@ export default {
         <nav>
             <img class="logo" alt="Staex logo" src="@/assets/logo-light.svg" />
             <ul>
-                <li><RouterLink to="/register">Register</RouterLink></li>
+                <li><RouterLink to="/new-asset">Asset</RouterLink></li>
+                <li><RouterLink to="/new-contract">Contract</RouterLink></li>
                 <li><RouterLink to="/qrcode">QR code</RouterLink></li>
                 <li><RouterLink to="/airport">Airport</RouterLink></li>
-                <li><RouterLink to="/landlord">Property</RouterLink></li>
             </ul>
         </nav>
     </header>

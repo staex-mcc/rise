@@ -6,26 +6,19 @@
 ## Usage
 
 ```bash
-cd airport-list
+cd airport-lisk
 ../lh_node.sh npm install
 cd ..
 # cleanup
 make clean
 # update genesis block
 make update_genesis
-cd airport-list
+cd airport-lisk
 # generate faucet plugin passphrase
 ../lh_node.sh node scripts/encrypt_passphrase.mjs
 cd ..
 # run lisk node
 make run
-../lh_node.sh node scripts/init.mjs
-# simulate drone landing
-../lh_node.sh node scripts/drone_landing.mjs
-# simulate carpet landing
-../lh_node.sh node scripts/carpet_landing.mjs
-# show demo results
-../lh_node.sh node scripts/demo_results.mjs
 ```
 
 ## Scripts
@@ -49,11 +42,4 @@ Then you can go to [Faucet website](http://localhost:4006) and feed your account
 
 ## Scripts
 
-- **create_accounts.js** - to create and feed account with Faucet.
-- **drone_landing.js** - to simulate Drone landing.
-- **enable_faucet.js** - to enable Faucet.
 - **encrypt_passphrase.js** - To encrypt passphrase with password.
-- **update_contract.js** - To update contract.
-- **save_airport_info.js** - Save Airport information to database.
-- **carpet_landing.js** - Simulate sending info from Carpet to Airport plugin.
-- **demo_results.js** - Show demo results.

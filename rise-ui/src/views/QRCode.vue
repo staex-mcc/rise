@@ -3,19 +3,19 @@ import QRCode from 'qrcode'
 export default {
     data() {
         return {
+            assetType: "drone",
             walletAddress: '',
+            landingId: '',
             qrcode: '',
             error: '',
         }
     },
-    watch: {
-        walletAddress(value) {
-            value = value.trim().toLowerCase()
+    methods: {
+        generateQrCode() {
             this.error = ''
-            this.walletAddress = value
-            if (value === '') {
+            if (this.walletAddress === '') {
                 this.qrcode = ''
-            } else if (!value.match(/^[0-9a-f]{40}$/)) {
+            } else if (!this.walletAddress.match(/^[0-9a-f]{40}$/)) {
                 this.qrcode = ''
                 this.error = 'The wallet address should be a 40 characters long hexadecimal string.'
             } else {
@@ -23,10 +23,26 @@ export default {
                     errorCorrectionLevel: 'H',
                     quality: 1,
                 }
-                QRCode.toDataURL(this.walletAddress, options).then((url) => {
+                let object = {
+                    address: this.walletAddress
+                }
+                if (this.assetType === 'airport') {
+                    object.landingId = this.landingId
+                }
+                QRCode.toDataURL(JSON.stringify(object), options).then((url) => {
                     this.qrcode = url
                 })
             }
+        }
+    },
+    watch: {
+        walletAddress(value) {
+            this.walletAddress = value.trim().toLowerCase()
+            this.generateQrCode()
+        },
+        landingId(value) {
+            this.landingId = value.trim()
+            this.generateQrCode()
         },
     },
 }
@@ -35,8 +51,37 @@ export default {
 <template>
     <h1>Get your QR code</h1>
     <div class="row">
+        <p>Asset</p>
+        <ul class="radio">
+            <li>
+                <input
+                    type="radio"
+                    name="assetType"
+                    id="assetDrone"
+                    value="drone"
+                    v-model="assetType"
+                />
+                <label for="assetDrone">Drone</label>
+            </li>
+            <li>
+                <input
+                    type="radio"
+                    name="assetType"
+                    id="assetAirport"
+                    value="airport"
+                    v-model="assetType"
+                />
+                <label for="assetAirport">Airport</label>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
         <label for="walletAddress">Wallet address</label>
         <input type="text" name="walletAddress" id="walletAddress" v-model="walletAddress" />
+    </div>
+    <div class="row" v-if="assetType === 'airport'">
+        <label for="landingId">Landing ID</label>
+        <input type="text" name="landingId" id="landingId" v-model="landingId" />
     </div>
     <div class="row error" v-if="error !== ''">{{ error }}</div>
     <div v-if="qrcode !== ''" class="row">

@@ -11,4 +11,13 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src', import.meta.url)),
         },
     },
+    server: {
+        proxy: {
+            // backend
+            '/ws': {
+                target: 'http://127.0.0.1:12400',
+                ws: true,
+            },
+        },
+    },
 })
